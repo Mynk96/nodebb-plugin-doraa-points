@@ -1,8 +1,8 @@
 {
-  "id": "nodebb-plugin-ns-points",
+  "id": "nodebb-plugin-doraa-points",
   "name": "NodeBB Points",
   "description": "Additional metrics for User Profiles. It's like experience in video games. Plugin is good for gamification of your board.",
-  "url": "https://github.com/NicolasSiver/nodebb-plugin-ns-points",
+  "url": "https://github.com/Mynk96/nodebb-plugin-doraa-points.git",
   "library": "./plugin/index.js",
   "hooks": [
     {
