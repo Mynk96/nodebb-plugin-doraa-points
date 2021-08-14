@@ -5,6 +5,7 @@
 
     const settings = require('./settings'),
           database = require('./database');
+    const posts = require.main.require('./src/posts');
 
     const debug = function (id, delta, total) {
         console.log('User %d changed amount of points on %d, total: %d', id, delta, total);
@@ -73,8 +74,34 @@
      * @param topicData {object} Signature - { tid:2, uid:1, cid:'1', mainPid:0, title: 'text', slug:'text', timestamp: 429976183015, lastposttime:0, postcount:0, viewcount:0, locked:0, deleted:0, pinned:0 }
      */
     Action.topicSave = function (topicData) {
+        console.log(parseInt(topicData.topic.cid) === 3);
         let value = settings.get().topicWeight;
+        if (parseInt(topicData.topic.cid) === 3) {
+            incrementPoints(topicData.topic.uid, 5);
+            return;
+        }
         incrementPoints(topicData.topic.uid, value);
     };
+
+    /**
+     *
+     * @param topicData {object} Signature - { topic: { tid:1, uid:2 }, uid:1 }
+     */
+    Action.topicPurge = function(topicData) {
+        let value = -settings.get().topicWeight;
+        if (parseInt(topicData.topic.cid) === 3) {
+            incrementPoints(topicData.topic.uid, -5);
+            return;
+        }
+        incrementPoints(topicData.topic.uid, value);
+    }
+
+    Action.toggleSolved = async function(data) {
+        if (data.pid) {
+            const postData = await posts.getPostData(data.pid);
+            (data.isSolved) ? incrementPoints(postData.uid, 4) : incrementPoints(postData.uid, -4);
+        }
+    }
+
 
 })(module.exports);

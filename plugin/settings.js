@@ -14,7 +14,6 @@
             reputationWeight      : 2,
             reputationActionWeight: 1,
             maxUsers              : 20,
-
             basePoints: 10,
             baseGrow  : 4
         };
